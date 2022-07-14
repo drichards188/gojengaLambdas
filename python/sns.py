@@ -10,7 +10,6 @@ def lambda_handler(event, context):
         'body': json.dumps('Hello from Lambda!')
     }
 
-
 def sns_pub():
     message = {
         "data": "thisismydata"
