@@ -35,6 +35,9 @@ def sqs_pub():
     print(response.get('MD5OfMessageBody'))
 
 def sqs_process():
+    # mock service name
+    i_am: str = "worker1"
+
     # Get the service resource
     sqs = boto3.resource('sqs')
 
@@ -49,6 +52,10 @@ def sqs_process():
             author_name = message.message_attributes.get('Author').get('StringValue')
             if author_name:
                 author_text = ' ({0})'.format(author_name)
+            target_name = message.message_attributes.get('target').get('StringValue')
+            if target_name == i_am:
+                # todo worker does work here
+                print(f"I am doing work on {message.body}")
 
         # Print out the body and author (if set)
         print('Hello, {0}!{1}'.format(message.body, author_text))
